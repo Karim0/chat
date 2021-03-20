@@ -1,6 +1,7 @@
 package com.server_chat.chat.services;
 
 import com.server_chat.chat.config.JwtConfig;
+import com.server_chat.chat.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,7 +25,7 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
 
-        Long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("authorities", authentication.getAuthorities().stream()

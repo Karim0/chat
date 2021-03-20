@@ -2,14 +2,12 @@ package com.server_chat.chat.controllers;
 
 import com.server_chat.chat.entities.Role;
 import com.server_chat.chat.entities.User;
+import com.server_chat.chat.services.JwtTokenProvider;
 import com.server_chat.chat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +17,9 @@ import java.util.Map;
 public class AuthController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestParam String username, @RequestParam String password) {
@@ -37,5 +38,11 @@ public class AuthController {
         u.setPassword(password);
 
         return ResponseEntity.ok(userService.registerUser(u, Role.USER));
+    }
+
+    @GetMapping("/current_user/{token}")
+    public ResponseEntity<?> getCurrentUser(@PathVariable String token){
+
+        return ResponseEntity.ok(userService.findByUsername(jwtTokenProvider.getClaimsFromJWT(token).getSubject()));
     }
 }
