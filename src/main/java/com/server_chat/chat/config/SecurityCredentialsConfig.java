@@ -54,7 +54,6 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
-                .antMatchers(HttpMethod.POST, "/facebook/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").anonymous()
                 .antMatchers("/v2/api-docs",
                         "/swagger-resources",
@@ -102,4 +101,5 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
 }

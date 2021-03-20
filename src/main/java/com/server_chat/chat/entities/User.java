@@ -35,8 +35,9 @@ public class User {
     @Column
     private boolean active;
 
-    @OneToMany
-    private Set<Role> roles;
+    @ManyToOne(targetEntity = Role.class)
+    @JoinColumn(referencedColumnName = "id")
+    private Role roles;
 
     public User(User user) {
         this.id = user.id;

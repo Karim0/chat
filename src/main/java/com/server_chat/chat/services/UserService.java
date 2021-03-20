@@ -3,6 +3,7 @@ package com.server_chat.chat.services;
 
 import com.server_chat.chat.entities.Role;
 import com.server_chat.chat.entities.User;
+import com.server_chat.chat.repository.RoleRepository;
 import com.server_chat.chat.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ public class UserService {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     public String loginUser(String username, String password) {
         Authentication authentication = authenticationManager
@@ -59,9 +63,11 @@ public class UserService {
 
             throw new Exception(String.format("username %s already exists", user.getUsername()));
         }
+
+
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>() {{ add(role); }});
+        user.setRoles(roleRepository.save(role));
 
         return userRepository.save(user);
     }

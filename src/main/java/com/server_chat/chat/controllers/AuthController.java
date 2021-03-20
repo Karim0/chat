@@ -14,6 +14,8 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+//@CrossOrigin(origins = "http://37.150.13.55:3000/")
+@CrossOrigin(origins = "http://37.150.13.55:3000", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = "If-Match")
 public class AuthController {
     @Autowired
     private UserService userService;
