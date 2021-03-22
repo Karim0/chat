@@ -8,13 +8,13 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 
-@Configuration
-@EnableWebSocket
-public class WebSocketConfiguration2 implements WebSocketConfigurer {
-    @SneakyThrows
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new SocketHandler(), "/socket")
-                .setAllowedOrigins("*/*");
-    }
+//@Configuration
+//@EnableWebSocket
+public class WebSocketConfiguration2 /*implements WebSocketConfigurer*/ {
+//    @SneakyThrows
+//    @Override
+//    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+//        registry.addHandler(new SocketHandler(), "/socket")
+//                .setAllowedOrigins("*/*");
+//    }
 }

@@ -65,6 +65,8 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                         // -- Swagger UI v3 (OpenAPI)
                         "/v3/api-docs/**",
                         "/swagger-ui/**").permitAll()
+                .antMatchers("/ws", "/ws/**",
+                        "/messages", "/messages/**", "/chat").permitAll()
                 .anyRequest().authenticated();
     }
 
@@ -88,8 +90,10 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(false);
-        config.addAllowedOrigin("*");
+        config.setAllowCredentials(true);
+//        config.addAllowedOrigin("127.0.0.1");
+        config.addAllowedOriginPattern("*");
+//        config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("HEAD");

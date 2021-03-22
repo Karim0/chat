@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import com.server_chat.chat.entities.ChatMessage;
 import com.server_chat.chat.entities.ChatNotification;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ChatController {
@@ -30,7 +32,7 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
-                chatMessage.getRecipientId(), "/queue/messages",
+                chatMessage.getRecipientId().toString(), "/queue/messages",
                 new ChatNotification(
                         saved.getId(),
                         saved.getSenderId(),
@@ -54,8 +56,10 @@ public class ChatController {
     }
 
     @GetMapping("/messages/{id}")
-    public ResponseEntity<?> findMessage(@PathVariable String id) throws Exception {
+    public ResponseEntity<?> findMessage(@PathVariable Long id) throws Exception {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));
     }
+
+
 }

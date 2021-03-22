@@ -2,11 +2,12 @@ package com.server_chat.chat.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.GeneratorType;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name = "chat_message")
 @Data
 public class ChatMessage {
     @Id

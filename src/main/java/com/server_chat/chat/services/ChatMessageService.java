@@ -3,6 +3,7 @@ package com.server_chat.chat.services;
 import com.server_chat.chat.entities.ChatMessage;
 import com.server_chat.chat.entities.MessageStatus;
 import com.server_chat.chat.repository.ChatMessageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.Query;
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ChatMessageService {
     @Autowired
     private ChatMessageRepository repository;
     @Autowired
     private ChatRoomService chatRoomService;
+
 
     public ChatMessage save(ChatMessage chatMessage) {
         chatMessage.setStatus(MessageStatus.RECEIVED);
@@ -42,7 +45,7 @@ public class ChatMessageService {
         return messages;
     }
 
-    public ChatMessage findById(String id) throws Exception {
+    public ChatMessage findById(Long id) throws Exception {
         return repository
                 .findById(id)
                 .map(chatMessage -> {
@@ -60,5 +63,7 @@ public class ChatMessageService {
 //                        .and("recipientId").is(recipientId));
 //        Update update = Update.update("status", status);
 //        hibernateOperations.update(query, update, ChatMessage.class);
+//        repository.updateMessage(senderId, recipientId, status);
+//        log.info("updateStatuses");
     }
 }
